@@ -7,21 +7,34 @@ export const useVillage = () => {
     useEffect(() => {
         getSmurfs()
     }, [])
-    const addSmurf = () => {
-
+    const addSmurf = data => {
+        axios.post('smurfs', data)
+        .then(res => {
+            getSmurfs()
+        })
+        .catch(err => console.log(err))
     }
 
-    const updateSmurf = () => {
-
+    const updateSmurf = data => {
+        axios.put(`smurfs/${data.id}`, data)
+        .then(res => {
+            getSmurfs()
+        })
+        .catch(err => console.log(err))
     }
 
-    const deleteSmurf = () => {
-
+    const deleteSmurf = id => {
+        axios.delete(`smurfs/${id}`)
+        .then(res => {
+            getSmurfs()
+        })
+        .catch(err => console.log(err))
     }
 
     const getSmurfs = () => {
         axios.get('smurfs')
         .then(res => updateSmurfs(res.data))
+        .catch(err => console.log(err))
     }
 
     return [smurfs, addSmurf, updateSmurf, deleteSmurf]
